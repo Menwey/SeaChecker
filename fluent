@@ -1,0 +1,36 @@
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+
+local Window = Fluent:CreateWindow({
+    Title = "Skitek Loader",
+    SubTitle = "Fluent Edition",
+    Size = UDim2.fromOffset(450, 320),
+    Acrylic = false,
+    Theme = "Dark"
+})
+
+local Tabs = { Main = Window:AddTab({ Title = "Main", Icon = "home" }) }
+
+local Scripts = {
+    ["Aimbot"] = "https://raw.githubusercontent.com/YourRepo/aim.lua",
+    ["ESP Master"] = "https://raw.githubusercontent.com/YourRepo/esp.lua",
+    ["Infinite Yield"] = "https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"
+}
+
+local List = {}
+for name, _ in pairs(Scripts) do table.insert(List, name) end
+
+local Dropdown = Tabs.Main:AddDropdown("Scripts", {
+    Title = "Select Script",
+    Values = List,
+    Default = 1,
+})
+
+Tabs.Main:AddButton({
+    Title = "Execute Script",
+    Callback = function()
+        local selectedName = Fluent.Options.Scripts.Value
+        if Scripts[selectedName] then
+            loadstring(game:HttpGet(Scripts[selectedName]))()
+        end
+    end
+})
