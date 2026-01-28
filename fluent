@@ -3,16 +3,18 @@ local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/
 local Window = Fluent:CreateWindow({
     Title = "Skitek Loader",
     SubTitle = "Fluent Edition",
+    TabWidth = 160,
     Size = UDim2.fromOffset(450, 320),
     Acrylic = false,
-    Theme = "Dark"
+    Theme = "Dark",
+    MinimizeKey = Enum.KeyCode.LeftControl
 })
 
 local Tabs = { Main = Window:AddTab({ Title = "Main", Icon = "home" }) }
 
 local Scripts = {
-    ["Aimbot"] = "https://raw.githubusercontent.com/YourRepo/aim.lua",
-    ["ESP Master"] = "https://raw.githubusercontent.com/YourRepo/esp.lua",
+    ["Aimbot"] = "ссылка_на_скрипт",
+    ["ESP"] = "ссылка_на_скрипт",
     ["Infinite Yield"] = "https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"
 }
 
@@ -34,3 +36,5 @@ Tabs.Main:AddButton({
         end
     end
 })
+
+Window:SelectTab(1)
