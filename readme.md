@@ -7,7 +7,7 @@
 > **SeaChecker is Beta:** SeaChecker is not responding for your accounts on sites
 
 Made by UntitledScripter
-<img width="838" height="720" alt="ShowCase" src="https://github.com/graz111/PGChecker/blob/main/image.png?raw=true" />
+<img width="838" height="720" alt="ShowCase" src="https://github.com/graz111/PGChecker/blob/main/image1.png?raw=true" />
 
 Checker is have 10 modes :
 
