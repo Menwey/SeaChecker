@@ -22,5 +22,5 @@ Checker is have 10 modes :
 
 "All In": "Search ALL templates (except pekora.zip) with clean email:password data" 
 
-"and etc"
+"and etc" 
 ]
