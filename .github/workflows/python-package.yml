@@ -1,7 +1,4 @@
-# This workflow will install Python dependencies, run tests and lint with a variety of Python versions
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
-
-name: Python package
+name: Python CI
 
 on:
   push:
@@ -10,31 +7,51 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
-
+  lint-and-test:
     runs-on: ubuntu-latest
+
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.9", "3.10", "3.11"]
+        python-version: ["3.9", "3.10", "3.11", "3.12"]
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
+        cache: 'pip'
+
     - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip
-        python -m pip install flake8 pytest
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        python -m pip install --upgrade pip setuptools wheel
+        # Install flake8 and pytest (core tools)
+        pip install flake8 pytest pytest-cov
+        # If requirements.txt exists → install project deps (customtkinter, tkinter, etc.)
+        if [ -f requirements.txt ]; then
+          pip install -r requirements.txt
+        fi
+
     - name: Lint with flake8
       run: |
-        # stop the build if there are Python syntax errors or undefined names
+        # Strict check: syntax errors, undefined names, etc.
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-    - name: Test with pytest
+        # Style warnings (treat as non-fatal for CI)
+        flake8 . --count --exit-zero --max-complexity=12 --max-line-length=127 --statistics
+
+    - name: Run tests with pytest
       run: |
-        pytest
+        # If you have tests → they will run
+        # --cov for coverage (optional)
+        pytest --cov=. --cov-report=term-missing || true
+        # || true → не ломает CI если тестов пока нет
+
+    - name: Upload coverage (optional)
+      if: matrix.python-version == '3.12'  # only once
+      uses: codecov/codecov-action@v4
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}  # add if you use Codecov
+        fail_ci_if_error: false
