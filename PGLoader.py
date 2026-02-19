@@ -12,10 +12,10 @@ import math
 ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("dark-blue")
 
-class PGChecker(ctk.CTk):
+class SeaChecker(ctk.CTk):
     def __init__(self):
         super().__init__()
-        self.title("PGChecker v2.0")
+        self.title("SeaChecker v2.0")
         self.geometry("1240x940")
         self.minsize(1140, 840)
 
@@ -63,7 +63,7 @@ class PGChecker(ctk.CTk):
 
     def _ru_texts(self):
         return {
-            "title": "PGCHECKER",
+            "title": "SeaChecker",
             "mode": "Режим поиска",
             "files": "Файлы",
             "selected": "Выбрано:",
@@ -96,7 +96,7 @@ class PGChecker(ctk.CTk):
 
     def _en_texts(self):
         return {
-            "title": "PGCHECKER",
+            "title": "SeaChecker",
             "mode": "Search Mode",
             "files": "Files",
             "selected": "Selected:",
@@ -519,4 +519,4 @@ class PGChecker(ctk.CTk):
             self.file_label.configure(text=f"{self.t('selected')} {cnt} · {names}")
 
 if __name__ == "__main__":
-    PGChecker().mainloop()
+    SeaChecker().mainloop()
